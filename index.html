@@ -1,19 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title></title>
-    <script type="text/javascript">
-    	
-   		document.addEventListener('plusready', function(){
-   			//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
-   			
-   		});
-   		
-    </script>
+	<title>收藏家</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- 样式 -->
+	<link rel="stylesheet" href="outside/bootstrap-4.4.1-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="outside/font-awesome-4.7.0/css/font-awesome.min.css"/>
+	<link rel="stylesheet" type="text/css" href="css/weui.min.css"/>
 </head>
-<body>
+<body ng-app="app" ng-controller="myCtr1" ng-init="init()">
+	<!-- 顶部超大屏幕 -->
+	<div class="jumbotron text-center" style="margin-bottom:0">
+		<h1><i class="fa fa-archive" aria-hidden="true"></i>收藏家</h1>
+		<p><span class="text-primary">{{user.nick}}</span>,欢迎━(*｀∀´*)ノ亻!</p>
+	</div>
 	
+	<!-- 主体内容 -->
+	<div class="container" style="margin-top:30px">
+		<div class="row mb-3 clearfix" ng-repeat="item in list">
+			<div class="col">
+				<img src="upload/{{item.filename}}" class="img-fluid" alt="item">
+			</div>
+			<div class="col bg-light">{{item.descstr}}</div>
+			<div class="col"><button type="button" class="btn btn-primary mb-1 float-right" ng-click="deleteItem(item)">删除</button></div>
+		</div>
+		<button type="button" class="btn btn-primary btn-block mb-3" ng-click="toSave()">
+			<i class="fa fa-plus" aria-hidden="true"></i> 添加
+		</button>
+	</div>
+	
+
 </body>
+<!-- js -->
+<script src="js/jquery.js"></script>
+<script src="js/popper.js"></script>
+<script src="outside/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
+<script src="js/angular.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/weui.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/index.js" type="text/javascript" charset="utf-8"></script>
 </html>
