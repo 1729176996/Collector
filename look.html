@@ -16,29 +16,17 @@
 		<a class="navbar-brand" href="#" ng-click="back()">
 			<i class="fa fa-chevron-left" aria-hidden="true"></i>
 		</a>
-		<span class="text-light flex-grow-1 text-center">添加</span>
+		<span class="text-light flex-grow-1 text-center">{{title}}</span>
 	</nav>
 	
 	<!-- 主体内容 -->
 	<div class="container" style="margin-top:30px">
-		<select class="form-control" ng-model="type">
-			<option ng-repeat="tp in typeList" value="{{tp.code}}">{{tp.name}}</option>
-		</select>
-		<form enctype="multipart/form-data">
-			<div class="form-group mt-5">
-				<label for="title"><i class="fa fa-user" aria-hidden="true"></i>标题:</label>
-				<input type="text" class="form-control" placeholder="标题" id="title" ng-model="title">
-			</div>
-			<div class="form-group" ng-show="type=='img'">
-				<input type="file" name="file" id="uploadFile">
-			</div>
-			
-			<div class="form-group" ng-show="type=='text'">
-				<label for="content">文字内容</label>
-				<textarea class="form-control" placeholder="文字内容" id="content" ng-model="content"></textarea>
-			</div>
-			<button type="button" class="btn btn-primary btn-block mb-3 mt-3" ng-click="save()"><i class="fa fa-plus" aria-hidden="true"></i> 添加</button>
-		</form>
+		<!-- 图片 -->
+		<p class="card-text" ng-if="type=='img'">
+			<img src="{{href}}" class="img-fluid" width="100%" alt="logo">
+		</p>
+		<!-- 文字 -->
+		<p class="card-text" ng-if="type=='text'">{{content}}</p>
 	</div>
 	
 
@@ -50,5 +38,5 @@
 <script src="js/angular.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/weui.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/common.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/save.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/look.js" type="text/javascript" charset="utf-8"></script>
 </html>

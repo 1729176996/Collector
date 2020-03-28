@@ -21,7 +21,7 @@ app.controller('myCtr1',function($scope,$http){
 		$scope.list = [];
 		$http({
 			method:'GET',
-			url:url+'/getItemsById?user_id='+$scope.user.id
+			url:url+'/getResourceList?user_id='+$scope.user.id
 		}).then(function(response){
 			//$scope.names = response.data.sites;
 			if(response.data.code==200){
@@ -37,58 +37,48 @@ app.controller('myCtr1',function($scope,$http){
 	$scope.toSave = function(){
 		window.location.href = 'save.html';
 	};
-	$scope.deleteItem = function(item){
-		if(!$scope.user.id){
-			weui.alert('没有用户信息，请登录',function(){
-				window.localStorage.removeItem('user');
-				window.location.href = 'console.html';
+	$scope.deleteResource = function(item){
+		weui.confirm('是否确定删除？', function(){
+			$http({
+				method:'GET',
+				url:url+'/deleteResource?user_id='+item.user_id+'&resource_id='+item.id+'&type='+item.type+'&filename='+item.filename
+			}).then(function(response){
+				//$scope.names = response.data.sites;
+				if(response.data.code==200){
+					//$scope.list = response.data.data;
+					setTimeout( ()=>{
+						weui.alert('删除成功',function(){
+							$scope.list = [];
+							$scope.getList();
+						});
+					},300);
+				}else{
+					setTimeout( ()=>{
+						weui.alert(response.data.msg);
+					},300);
+				}
+			}, function(response){
+				// 请求失败执行代码
+				setTimeout( ()=>{
+					weui.alert('网络失败');
+				},300);
 			});
-			return;
-		}
-		
-		$http({
-			method:'GET',
-			url:url+'/deleteItem?user_id='+item.user_id+'&item_id='+item.id
-		}).then(function(response){
-			//$scope.names = response.data.sites;
-			if(response.data.code==200){
-				//$scope.list = response.data.data;
-				weui.alert('删除成功',function(){
-					$scope.list = [];
-					$scope.getList();
-				});
-			}else{
-				weui.alert(response.data.msg);
-			}
-		}, function(response){
-			// 请求失败执行代码
-			weui.alert('网络失败');
-		});
+		}, function(){console.log('no')});
 	};
-	//上传
-	$scope.upload = function(){
-		$('#uploadForm').form('submit', {
-			url:'http://localhost:8081/file_upload',
-			success: function(data) {
-				console.log(data);
+	$scope.lookResource = function(item){
+		var type = item.type;
+		/*var _url = url+'/public/'+item.filename;
+		var gallery = weui.gallery(_url, {
+			className: 'custom-classname',
+			onDelete: function(){
+				if(confirm('确定删除该图片？')){ console.log('删除'); }
+				gallery.hide(function() {
+					console.log('`gallery` has been hidden');
+				});
 			}
-		});
-	}
+		});*/
+		window.localStorage.setItem('itemObj',JSON.stringify(item));
+		window.location.href = 'look.html';
+	};
 	
-	/**
-	 * 垂直居中模态框 
-	 **/
-	function centerModals() { 
-		$('.modal').each(function(i) { 
-			var $clone = $(this).clone().css('display', 'block').appendTo('body'); 
-			var top = Math.round(($clone.height() - $clone.find('.modal-content').height()) / 2); 
-			top = top > 50 ? top : 0; 
-			$clone.remove(); 
-			$(this).find('.modal-content').css("margin-top", top - 50); 
-		}); 
-	} 
-	// 在模态框出现的时候调用垂直居中方法 
-	$('.modal').on('show.bs.modal', centerModals); 
-	// 在窗口大小改变的时候调用垂直居中方法 
-	$(window).on('resize', centerModals);
 });
