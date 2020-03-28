@@ -227,7 +227,8 @@
             "plugins" : {
                 "speech" : {
                     "ifly" : {}
-                }
+                },
+                "ad" : {}
             }
         },
         "screenOrientation" : [ "portrait-primary" ]
